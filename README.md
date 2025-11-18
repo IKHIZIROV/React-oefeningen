@@ -14,3 +14,11 @@ react native app maken:
 
 run command:
 > npx expo start
+
+install drawer:
+> npm install @react-navigation/native
+> npm install @react-navigation/drawer
+> npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar react-native-gesture-handler react-native-web react-dom @react-navigation/drawer react-native-reanimated
+
+website voor react native icons:
+> https://icons.expo.fyi/Index
