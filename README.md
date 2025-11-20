@@ -20,5 +20,8 @@ install drawer:
 > npm install @react-navigation/drawer
 > npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar react-native-gesture-handler react-native-web react-dom @react-navigation/drawer react-native-reanimated
 
+install async storage:
+> npx expo install @react-native-async-storage/async-storage
+
 website voor react native icons:
 > https://icons.expo.fyi/Index
