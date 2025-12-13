@@ -1,11 +1,16 @@
-import { Stack } from "expo-router";
+import { Drawer } from "expo-router/drawer";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
 
-const RootLayout = () => {
+export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="index" />
-    </Stack>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <StatusBar style="auto" />
+      <Drawer>
+        <Drawer.Screen name="index" options={{ title: "Home" }} />
+        <Drawer.Screen name="favorites" options={{ title: "Favorites" }} />
+        <Drawer.Screen name="settings" options={{ title: "Settings" }} />
+      </Drawer>
+    </GestureHandlerRootView>
   );
 }
-
-export default RootLayout;
