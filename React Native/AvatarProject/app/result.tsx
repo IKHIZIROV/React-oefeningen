@@ -3,6 +3,7 @@ import { Image } from "expo-image";
 import { useLocalSearchParams, router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useRef, useState } from "react";
+
 import Header from "@/components/Header";
 import { Colors } from "@/styles/theme";
 import { loadProfile } from "@/storage/profileStorage";
@@ -32,23 +33,27 @@ export default function ResultScreen() {
       }),
       Animated.spring(scaleAnim, {
         toValue: 1,
-        friction: 5,
+        friction: 6,
         useNativeDriver: true,
       }),
     ]).start();
   }, []);
 
   useEffect(() => {
-    if (!Number.isNaN(numericScore)) checkHighScore();
-  }, [score]);
+    if (!Number.isNaN(numericScore)) {
+      updateHighScore();
+    }
+  }, [numericScore]);
 
-  const checkHighScore = async () => {
+  const updateHighScore = async () => {
     const stored = await AsyncStorage.getItem("highScore");
-    if (stored === null || numericScore > Number(stored)) {
+    const storedNumber = stored ? Number(stored) : null;
+
+    if (storedNumber === null || numericScore > storedNumber) {
       await AsyncStorage.setItem("highScore", String(numericScore));
       setHighScore(numericScore);
     } else {
-      setHighScore(Number(stored));
+      setHighScore(storedNumber);
     }
   };
 
@@ -57,38 +62,49 @@ export default function ResultScreen() {
     : "Student";
 
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.parchment }}>
+    <View style={styles.screen}>
       <Header title="Resultaat" showBack />
 
       <Animated.View
         style={[
-          styles.container,
-          { opacity: fadeAnim, transform: [{ scale: scaleAnim }] },
+          styles.card,
+          {
+            opacity: fadeAnim,
+            transform: [{ scale: scaleAnim }],
+          },
         ]}
       >
+        {/* Rank image */}
         <Image
           source={rankImages[rank]}
           style={styles.rankImage}
           contentFit="contain"
         />
 
-        <Text style={styles.score}>
-          Score: {numericScore} / 5
+        {/* Rank text */}
+        <Text style={styles.rankText}>{rank}</Text>
+
+        {/* Score */}
+        <Text style={styles.scoreText}>
+          Score: {Number.isNaN(numericScore) ? 0 : numericScore} / 5
         </Text>
 
-        <Text style={styles.rank}>🏅 {rank}</Text>
-
+        {/* High score */}
         {highScore !== null && (
-          <Text style={styles.highScore}>
-            High score: {highScore} / 5
+          <Text style={styles.highScoreText}>
+            Hoogste score: {highScore} / 5
           </Text>
         )}
 
+        {/* Action */}
         <Pressable
           style={styles.button}
-          onPress={() => router.replace("/")}
+          onPress={() => router.replace("/(tabs)")}
+          // Dit is een TypeScript type warning van expo-router rond route groups, maar runtime werkt correct
         >
-          <Text style={styles.buttonText}>Terug naar Home</Text>
+          <Text style={styles.buttonText}>
+            Terug naar Home
+          </Text>
         </Pressable>
       </Animated.View>
     </View>
@@ -96,38 +112,63 @@ export default function ResultScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
+    backgroundColor: Colors.parchment,
+  },
+
+  card: {
+    flex: 1,
+    margin: 20,
+    padding: 24,
+    borderRadius: 24,
+    backgroundColor: "#fdf6e3", // parchment card
     alignItems: "center",
     justifyContent: "center",
-    padding: 24,
+
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 6,
   },
+
   rankImage: {
-    width: 120,
-    height: 120,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
     marginBottom: 20,
   },
-  score: {
-    fontSize: 22,
-    marginBottom: 10,
+
+  rankText: {
+    fontSize: 24,
+    fontWeight: "800",
+    color: Colors.inkDark,
+    marginBottom: 12,
   },
-  rank: {
+
+  scoreText: {
     fontSize: 20,
-    fontWeight: "700",
-    marginBottom: 16,
+    color: Colors.inkDark,
+    marginBottom: 6,
   },
-  highScore: {
-    fontSize: 18,
+
+  highScoreText: {
+    fontSize: 16,
+    color: Colors.inkLight,
     marginBottom: 30,
   },
+
   button: {
     backgroundColor: Colors.water,
     paddingVertical: 14,
-    paddingHorizontal: 40,
+    paddingHorizontal: 48,
     borderRadius: 30,
   },
+
   buttonText: {
     color: "white",
     fontWeight: "800",
+    fontSize: 16,
+    letterSpacing: 0.5,
   },
 });

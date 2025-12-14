@@ -81,6 +81,14 @@ export default function HomeScreen() {
         >
           <Text style={styles.playText}>MIJN PROFIEL</Text>
         </Pressable>
+
+        <Pressable
+          style={[styles.playButton, { backgroundColor: Colors.air }]}
+          onPress={() => router.push("/add-question")}
+        >
+          <Text style={styles.playText}>VRAAG TOEVOEGEN</Text>
+        </Pressable>
+
       </View>
     </View>
   );

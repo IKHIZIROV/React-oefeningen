@@ -1,50 +1,178 @@
-# Welcome to your Expo app 👋
+# How to use:
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+   > npm install
+   > npx expo start
 
-## Get started
+# AvatarProject — React Native (Expo) Quiz App
 
-1. Install dependencies
+Mobiele quiz-app in **React Native + TypeScript** gebouwd met **Expo** en **expo-router**.
+De app gebruikt de **Avatar: The Last Airbender** vragen-API om quizvragen op te halen en bevat meerdere schermen, state management, persistente opslag en extra Expo-modules voor UX.
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## Overzicht
+Deze app is een quiz-game rond Avatar: The Last Airbender.
 
-   ```bash
-    npx expo start
-   ```
+De gebruiker kan:
+- een vaste quiz spelen van **5 random vragen**
+- een **endless mode** spelen
+- een **profiel** instellen (naam & nation)
+- een **rank** opbouwen door correcte antwoorden
+- zelf een vraag **toevoegen** via een formulier (POST)
 
-In the output, you'll find options to open the app in a
+De UI is gebaseerd op een **ATLA-parchment/element** stijl.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Functionaliteiten
+### Home
+- Rank-afbeelding
+- Profielinfo (naam, nation)
+- Nation-afbeelding
+- Navigatie naar Quiz, Endless mode, Profiel en Vraag toevoegen
 
-## Get a fresh project
+### Quiz
+- Vraagt data op via GET
+- Multiple choice antwoorden
+- Feedback bij correct/fout (haptics)
+- Resultaatscherm + highscore
 
-When you're ready, run:
+### Endless mode
+- Willekeurige vragen
+- Feedback bij correct/fout
+- Uitbreidbaar met fout-gebaseerde highscore
 
+### Profiel
+- Naam instellen
+- Nation kiezen
+- Nation foto
+- Correcte antwoorden
+- Rank + rank foto
+- Automatisch opgeslagen
+
+### Vraag toevoegen
+- Vraag invoeren
+- 4 antwoorden invoeren
+- Correct antwoord selecteren
+- POST request met bearer token
+
+---
+
+## Vereisten uit de opdracht
+- Meerdere schermen ✔
+- Routing library ✔ (expo-router)
+- FlatList of ScrollView ✔ (ScrollView)
+- GET request ✔
+- POST request ✔
+- AsyncStorage ✔
+- Minstens 2 Expo modules ✔
+- UX & styling ✔
+
+---
+
+## Tech stack
+- React Native
+- Expo
+- TypeScript
+- expo-router
+- AsyncStorage
+
+---
+
+## Expo modules & libraries
+- expo-router
+- expo-image
+- expo-haptics
+- react-native-safe-area-context
+- @react-native-async-storage/async-storage
+- @expo/vector-icons
+
+---
+
+## API gebruik
+### GET
+https://sampleapis.assimilate.be/avatar/questions
+
+### POST
+POST requests worden uitgevoerd met een bearer token.
+Niet alle SampleAPIs endpoints ondersteunen POST.
+
+---
+
+## Routing & navigatie
+- Bottom Tab Navigation via expo-router
+- Tabs: Home, Profile, Add Question
+- Extra routes: Quiz, Result, Endless
+
+---
+
+## AsyncStorage
+Gebruikt voor:
+- Profielgegevens
+- Highscore
+
+---
+
+## Installatie & opstarten
 ```bash
-npm run reset-project
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## Mappenstructuur
+```
+AvatarProject/
+├─ api/
+├─ app/
+│  ├─ (tabs)/
+│  ├─ quiz.tsx
+│  ├─ result.tsx
+│  └─ endless.tsx
+├─ assets/
+├─ components/
+├─ storage/
+├─ styles/
+├─ types/
+└─ utils/
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Screenshots
 
-## Join the community
+### Home
+![Home](screenshots/homepage.jpg)
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Quiz
+**Vraag**
+![Quiz](screenshots/quiz.jpg)
+
+**Correct antwoord**
+![Quiz correct](screenshots/quiz-correct.jpg)
+
+**Fout antwoord**
+![Quiz fout](screenshots/quiz-incorrect.jpg)
+
+---
+
+### Resultaat
+![Resultaat](screenshots/resultaat.jpg)
+
+---
+
+### Profiel
+![Profiel](screenshots/profile.jpg)
+
+---
+
+### Vraag toevoegen
+![Add question](screenshots/add-question.jpg)
+
+---
+
+### Endless mode
+![Endless mode](screenshots/endless.jpg)

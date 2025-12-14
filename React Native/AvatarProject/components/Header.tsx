@@ -1,6 +1,8 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { Colors } from "../styles/theme";
+import { Colors } from "@/styles/theme";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface HeaderProps {
   title: string;
@@ -8,46 +10,46 @@ interface HeaderProps {
 }
 
 export default function Header({ title, showBack }: HeaderProps) {
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
-      {showBack ? (
-        <Pressable onPress={() => router.back()}>
-          <Text style={styles.back}>←</Text>
+    <View style={[styles.container, { paddingTop: insets.top + 12 }]}>
+      {showBack && (
+        <Pressable
+          onPress={() => router.back()}
+          style={styles.backButton}
+          hitSlop={10} // 👈 maakt klikgebied groter
+        >
+          <Ionicons
+            name="arrow-back"
+            size={28}          // 👈 GROTER
+            color={Colors.inkDark}
+          />
         </Pressable>
-      ) : (
-        <View style={{ width: 30 }} />
       )}
 
       <Text style={styles.title}>{title}</Text>
-
-      {/* spacer for symmetry */}
-      <View style={{ width: 30 }} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 70,
-    backgroundColor: Colors.parchmentDark,
+    backgroundColor: Colors.parchment,
+    paddingBottom: 14,
+    paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    borderBottomWidth: 2,
-    borderBottomColor: "#a89763",
   },
+
+  backButton: {
+    marginRight: 16,
+    padding: 6, // 👈 meer ruimte rond de pijl
+  },
+
   title: {
-    flex: 1,
-    textAlign: "center",
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "800",
     color: Colors.inkDark,
-    letterSpacing: 1,
-    paddingTop: 15
-  },
-  back: {
-    fontSize: 24,
-    color: Colors.inkDark,
-    fontWeight: "800",
   },
 });
